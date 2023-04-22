@@ -1,7 +1,7 @@
 # configured aws provider with proper credentials
 provider "aws" {
-  region    = "us-east-1"
-  profile   = "default"
+  region    = "us-east-2"
+  profile   = "nelson_admin_profile"
 }
 
 
@@ -86,7 +86,7 @@ resource "aws_security_group" "ec2_security_group" {
 data "aws_ami" "ubuntu" {
 
     most_recent = true
-
+    owners = ["099720109477"]
     filter {
         name   = "name"
         values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
@@ -97,7 +97,6 @@ data "aws_ami" "ubuntu" {
         values = ["hvm"]
     }
 
-    owners = ["099720109477"]
 }
 
 # launch the ec2 instance
@@ -106,7 +105,7 @@ resource "aws_instance" "ec2_instance" {
   instance_type          = "t2.small"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
-  key_name               = "bada"
+  key_name               = "cloud_convo_key_pair"
   user_data = "${file("install_jenkins.sh")}"
 
   tags = {
