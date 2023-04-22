@@ -1,3 +1,4 @@
+<!DOCTYPE>
 <html>
   <head>
     <title>Welcome to my web page</title>
